@@ -52,6 +52,21 @@ $(document).ready( function () {//when page is loaded
     }) //When the state is dependent on the DOM and not the other way around, 
        //DOM queries to keep track of state get complicated. 
 
+    // Attach an event handler to the dynamic row remove button
+    // this is on a <div class="container"> tag
+    // .on(event, selector, handler) - can also do .on(event, selector, data to be used when event.data is triggered, handler)
+    $('#app').on('click', '.attendee .remove-attendee', function (event) {
+        event.preventDefault();
+        var $row = $(event.target).closest('.attendee.row');
+    
+        $row.remove();
+        $('#app').trigger('attendee:remove');
+    });
+    
+    $('#app').on('attendee:remove', function () {
+        syncPurchaseButton();
+        syncRemoveButtons();
+    });
      // Initialize the form
 
      //set up the unit cost of one ticket
